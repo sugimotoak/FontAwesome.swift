@@ -43,9 +43,11 @@ import UIKit
             }
         }
         updateFontAttributes { (state, font) in
-            var attributes = titleTextAttributes(for: state) ?? [:]
-            attributes[NSFontAttributeName] = font
-            setTitleTextAttributes(attributes, for: state)
+            let attributes = titleTextAttributes(for: state) ?? [:]
+            var convertedAttributes = Dictionary(uniqueKeysWithValues:
+                attributes.lazy.map { (NSAttributedStringKey($0.key), $0.value) })
+            convertedAttributes[NSAttributedStringKey.font] = font
+            setTitleTextAttributes(convertedAttributes, for: state)
         }
     }
 
